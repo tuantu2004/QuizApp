@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" >
+    <LinearLayout android:orientation="vertical" android:padding="16dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <Switch android:id="@+id/swMusic" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Background music (On/Off)"/>
+        <Switch android:id="@+id/swSfx" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Sound effects (On/Off)"/>
+        <Switch android:id="@+id/swPerQ" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Per-question timer (On/Off)"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Number of questions per quiz:" android:layout_marginTop="16dp"/>
+        <EditText android:id="@+id/etNumQ" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Total test timer (seconds, 0 = off):" android:layout_marginTop="16dp"/>
+        <EditText android:id="@+id/etTotalTimer" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number"/>
+
+        <Button android:id="@+id/btnSaveSettings" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Save" android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</ScrollView>
