@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "type": "MCQ",
+    "question": "Ngôn ngữ nào được xem là nền tảng cho Android development?",
+    "options": ["Java", "Swift", "PHP", "Ruby"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 2,
+    "type": "MCQ",
+    "question": "HTML dùng để làm gì?",
+    "options": ["Thiết kế giao diện", "Quản lý cơ sở dữ liệu", "Lập trình hệ điều hành", "Biên dịch mã nguồn"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 3,
+    "type": "TF",
+    "question": "SQL được dùng để truy vấn cơ sở dữ liệu.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 4,
+    "type": "TF",
+    "question": "RAM là bộ nhớ lưu trữ vĩnh viễn của máy tính.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": false
+  },
+  {
+    "id": 5,
+    "type": "MCQ",
+    "question": "HTTP viết tắt của từ gì?",
+    "options": ["Hyper Text Transfer Protocol", "High Transfer Text Protocol", "Hyper Tool Transfer Protocol", "High Text Transfer Process"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 6,
+    "type": "MCQ",
+    "question": "Ngôn ngữ nào phổ biến trong phát triển trí tuệ nhân tạo?",
+    "options": ["Python", "Pascal", "COBOL", "Fortran"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 7,
+    "type": "TF",
+    "question": "Git là một hệ thống quản lý phiên bản phân tán.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 8,
+    "type": "TF",
+    "question": "Linux là một hệ điều hành mã nguồn mở.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 9,
+    "type": "MCQ",
+    "question": "IDE phổ biến để phát triển ứng dụng Android?",
+    "options": ["Xcode", "Visual Studio", "Android Studio", "Eclipse"],
+    "correctIndex": 2,
+    "correctTrue": null
+  },
+  {
+    "id": 10,
+    "type": "MCQ",
+    "question": "Trong mạng máy tính, IP viết tắt của?",
+    "options": ["Internet Protocol", "Internal Process", "Information Package", "Input Protocol"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 11,
+    "type": "MCQ",
+    "question": "CSDL nào sau đây là NoSQL?",
+    "options": ["MySQL", "PostgreSQL", "MongoDB", "Oracle"],
+    "correctIndex": 2,
+    "correctTrue": null
+  },
+  {
+    "id": 12,
+    "type": "TF",
+    "question": "Machine Learning là một nhánh của Trí tuệ nhân tạo (AI).",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 13,
+    "type": "TF",
+    "question": "CSS dùng để định dạng nội dung HTML.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 14,
+    "type": "MCQ",
+    "question": "TCP/IP thuộc lớp nào trong mô hình OSI?",
+    "options": ["Network", "Transport", "Application", "Physical"],
+    "correctIndex": 1,
+    "correctTrue": null
+  },
+  {
+    "id": 15,
+    "type": "MCQ",
+    "question": "Ngôn ngữ nào được Facebook phát triển?",
+    "options": ["Hack", "Go", "Rust", "Scala"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 16,
+    "type": "TF",
+    "question": "Docker là một công cụ ảo hóa hệ điều hành.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  },
+  {
+    "id": 17,
+    "type": "TF",
+    "question": "IPv6 dùng địa chỉ dài 64 bit.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": false
+  },
+  {
+    "id": 18,
+    "type": "MCQ",
+    "question": "Framework nào dùng để phát triển ứng dụng web bằng Java?",
+    "options": ["Django", "Spring", "Laravel", "Rails"],
+    "correctIndex": 1,
+    "correctTrue": null
+  },
+  {
+    "id": 19,
+    "type": "MCQ",
+    "question": "Ký hiệu Big-O biểu diễn điều gì?",
+    "options": ["Độ phức tạp thuật toán", "Kích thước bộ nhớ", "Độ chính xác dữ liệu", "Số dòng code"],
+    "correctIndex": 0,
+    "correctTrue": null
+  },
+  {
+    "id": 20,
+    "type": "TF",
+    "question": "Cloud Computing cho phép lưu trữ và xử lý dữ liệu trên Internet.",
+    "options": null,
+    "correctIndex": null,
+    "correctTrue": true
+  }
+]

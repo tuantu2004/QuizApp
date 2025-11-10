@@ -1,0 +1,26 @@
+this._s=this._s||{};(function(_){var window=this;
+try{
+_.t("QqJ8Gd");
+var sMc;
+_.tMc=function(a,b,c=!1,d,e){d=d||a.oa;if(!_.rMc(a,d))return!1;let f,g;try{g=c?_.iw(a.Ca,d):null;f=d.createElement("textarea");f.value=b;f.setAttribute("readonly","");_.pm(f,"height",0);d.body.appendChild(f);if(a.Da)f.select();else{const h=d.createRange();h.selectNodeContents(f);a.Aa.getSelection().removeAllRanges();a.Aa.getSelection().addRange(h);f.setSelectionRange(0,b.length)}d.addEventListener("copy",h=>{h.clipboardData.setData("text/plain",b);e&&h.clipboardData.setData(e,b);h.preventDefault()},{once:!0,
+capture:!0});return sMc(a,d)}finally{f&&_.cm(f),g&&_.hw(g)}};sMc=function(a,b){b=b||a.oa;try{return _.rMc(a,b)?b.execCommand("copy"):!1}catch(c){return!1}};_.rMc=function(a,b){b=b||a.oa;b=b.queryCommandSupported("copy");!b&&a.Ba&&(a.Ba=!0);return b};
+_.Oz=class extends _.$n{static Sa(){return{service:{focus:_.mw,window:_.ao}}}constructor(a){super();this.nm=null;this.oa=a.service.window.getDocument();this.Aa=a.service.window.get();this.Ca=a.service.focus;this.Da=!_.ra()&&!_.Md.jNa();this.Ba=!1}copy(a,b=!1,c,d){c=c||this.oa;return a?_.tMc(this,a,b,c,d):sMc(this,c)}};_.Me(_.Ez,_.Oz);
+_.u();
+}catch(e){_._DumpException(e)}
+try{
+_.e9c=_.x("CHCSlb",[]);_.Mc(_.e9c);
+}catch(e){_._DumpException(e)}
+try{
+_.a9c=_.x("mzzZzc",[]);_.Mc(_.a9c);
+}catch(e){_._DumpException(e)}
+try{
+_.pD=_.x("fmklff",[_.ah,_.a9c,_.e9c]);
+}catch(e){_._DumpException(e)}
+try{
+_.t("TdC3Wc");
+_.Ykf=class extends _.$n{static Sa(){return{service:{clipboard:_.Oz,window:_.jef}}}constructor(a){super();this.Dw=a.service.clipboard;this.oa=a.service.window}copy(a,b=0){this.Dw.copy(a,!1,this.oa.getDocument())?(a=_.na(),_.ja(a,"SamsungBrowser")||(_.ja(a,"Version/0.")||_.ja(a,"Version/1.")||_.ja(a,"Version/2.")||_.ja(a,"Version/3."))&&(_.ja(a,"SAMSUNG")||_.ja(a,"SM-")||_.ja(a,"SGH-"))||this.qj("\u0110\u00e3 sao ch\u00e9p v\u0103n b\u1ea3n v\u00e0o b\u1ea3ng nh\u1edb t\u1ea1m",b)):this.qj("Kh\u00f4ng sao ch\u00e9p \u0111\u01b0\u1ee3c v\u0103n b\u1ea3n",
+b)}async qj(a,b){try{a:switch(b){case 0:var c="yuChW";break a;case 1:c="yuChW YEw87d";break a;default:c=null}(b=c)&&_.y(await _.y(_.Wkf(this,"snackbar",_.pD))).Zr({label:a,pD:!0,Xb:b})}finally{_.y()}}};_.Me(_.Vkf,_.Ykf);
+_.u();
+}catch(e){_._DumpException(e)}
+})(this._s);
+// Google Inc.
