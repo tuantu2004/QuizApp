@@ -247,13 +247,12 @@ public class QuizActivity extends AppCompatActivity {
         selectedOption = option;
         for (int i = 0; i < optionCards.length; i++) {
             optionCards[i].setCardBackgroundColor(Color.WHITE);
-            optionChecks[i].setVisibility(View.GONE);
         }
-        optionCards[option].setCardBackgroundColor(Color.parseColor("#E3F2FD"));
-        optionChecks[option].setVisibility(View.VISIBLE);
+        optionCards[option].setCardBackgroundColor(Color.parseColor("#E3F2FD")); // Highlight chọn
         btnNext.setEnabled(true);
         btnNext.setAlpha(1f);
     }
+
 
     private void checkAnswerAndProceed() {
         if (selectedOption == -1) {
@@ -271,14 +270,25 @@ public class QuizActivity extends AppCompatActivity {
             isCorrect = (q.getCorrectIndex() != null && q.getCorrectIndex() == selectedOption);
         }
 
+
         if (isCorrect) {
             score += 10;
             playCorrect();
-            showCorrectAnswer(selectedOption);
+
+            optionChecks[selectedOption].setVisibility(View.VISIBLE);
+            optionChecks[selectedOption].setImageResource(R.drawable.ic_check); // icon check
+            optionCards[selectedOption].setCardBackgroundColor(Color.parseColor("#C8E6C9")); // màu xanh đúng
         } else {
             playWrong();
-            showWrongAnswer(selectedOption);
-            showCorrectAnswer(q.getCorrectIndex() != null ? q.getCorrectIndex() : (q.isCorrectTrue() ? 0 : 1));
+            optionChecks[selectedOption].setVisibility(View.VISIBLE);
+            optionChecks[selectedOption].setImageResource(R.drawable.ic_cross); // icon x
+            optionCards[selectedOption].setCardBackgroundColor(Color.parseColor("#FFCDD2")); // màu đỏ sai
+
+
+            int correct = q.getCorrectIndex() != null ? q.getCorrectIndex() : (q.isCorrectTrue() ? 0 : 1);
+            optionChecks[correct].setVisibility(View.VISIBLE);
+            optionChecks[correct].setImageResource(R.drawable.ic_check);
+            optionCards[correct].setCardBackgroundColor(Color.parseColor("#C8E6C9")); // màu xanh đúng
         }
 
         updateScore();
@@ -288,8 +298,9 @@ public class QuizActivity extends AppCompatActivity {
             currentQuestion++;
             if (currentQuestion < questions.size()) showQuestion();
             else finishQuiz();
-        }, 1500);
+        }, 1500); // delay để người dùng nhìn thấy đúng/sai
     }
+
 
     private void showCorrectAnswer(int index) {
         if (index >= 0 && index < optionCards.length)
