@@ -35,10 +35,21 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         // Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // Kiểm tra nếu đã đăng nhập trước đó
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Người dùng đã đăng nhập, chuyển thẳng vào MainActivity
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return; // Không load layout login
+        }
+
+        // Nếu chưa đăng nhập, load layout login
+        setContentView(R.layout.activity_login);
 
         // Ánh xạ view
         etEmail = findViewById(R.id.etEmail);

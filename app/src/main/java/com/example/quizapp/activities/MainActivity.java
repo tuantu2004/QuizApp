@@ -8,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.bumptech.glide.Glide;
 import com.example.quizapp.R;
+import com.example.quizapp.data.MusicManager;
 import com.example.quizapp.data.SettingsManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    private ActivityResultLauncher<Intent> avatarLauncher;
+
     int[] avatars = {
             R.drawable.avatar1,
             R.drawable.avatar2,
@@ -52,15 +58,24 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // Khởi tạo SettingsManager theo user hiện tại
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = (user != null) ? user.getUid() : "guest";
         settings = new SettingsManager(this, uid);
 
         initViews();
+        setupAvatarResultLauncher();
         setupListeners();
         loadUserInfo();
         updateAvatar();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Khi activity hiện lên, chạy nhạc app nếu bật
+        if (settings.isMusicOn()) {
+            MusicManager.startAppMusic(this, true);
+        }
     }
 
     private void initViews() {
@@ -75,18 +90,37 @@ public class MainActivity extends AppCompatActivity {
         cardLogout = findViewById(R.id.cardLogout);
     }
 
-    private void setupListeners() {
-        btnChangeAvatar.setOnClickListener(v -> startActivity(new Intent(this, AvatarActivity.class)));
+    private void setupAvatarResultLauncher() {
+        avatarLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        updateAvatar();
+                    }
+                }
+        );
+    }
 
-        cardStartQuiz.setOnClickListener(v -> startActivity(new Intent(this, QuizActivity.class)));
+    private void setupListeners() {
+        btnChangeAvatar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AvatarActivity.class);
+            avatarLauncher.launch(intent);
+        });
+
+        cardStartQuiz.setOnClickListener(v -> {
+            // Tạm dừng nhạc app trước khi vào QuizActivity
+            MusicManager.pauseAppMusic();
+
+            Intent intent = new Intent(this, QuizActivity.class);
+            startActivity(intent);
+        });
 
         cardCreate.setOnClickListener(v -> startActivity(new Intent(this, CreateQuestionActivity.class)));
-
         cardSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-
         cardLogout.setOnClickListener(v -> {
             if (mAuth != null) mAuth.signOut();
             Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+            MusicManager.stopAppMusic(); // dừng nhạc app khi logout
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -147,21 +181,16 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.e("Firestore", "Failed to create default stats", e));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateAvatar();
-        loadUserInfo();
-    }
-
     private void updateAvatar() {
         try {
-            String avatarUrl = settings.getAvatarUrl(); // Nếu sau này dùng Cloudinary
-            int savedIndex = settings.getAvatarIndex(); // Avatar local
+            String avatarUrl = settings.getAvatarUrl();
+            int savedIndex = settings.getAvatarIndex();
 
             if (avatarUrl != null && !avatarUrl.isEmpty()) {
-                // TODO: Load image từ URL (Glide / Picasso)
-                // Glide.with(this).load(avatarUrl).into(ivAvatar);
+                Glide.with(this)
+                        .load(avatarUrl)
+                        .placeholder(avatars[(savedIndex >= 0 && savedIndex < avatars.length) ? savedIndex : 0])
+                        .into(ivAvatar);
             } else {
                 ivAvatar.setImageResource((savedIndex >= 0 && savedIndex < avatars.length) ? avatars[savedIndex] : avatars[0]);
             }

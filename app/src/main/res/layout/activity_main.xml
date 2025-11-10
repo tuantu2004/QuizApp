@@ -138,12 +138,12 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Change Avatar Button -->
+                    <!-- Change Profile Button -->
                     <Button
                         android:id="@+id/btnChangeAvatar"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:text="Change Avatar"
+                        android:text="EditProfile"
                         android:textColor="#6B5FB5"
                         android:background="@drawable/outline_button_background"
                         android:textSize="14sp"
@@ -192,7 +192,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_play"
-                            android:tint="@android:color/white"
+                            app:tint="@android:color/white"
                             android:layout_marginBottom="12dp"/>
 
                         <TextView
@@ -230,7 +230,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_add"
-                            android:tint="@android:color/white"
+                            app:tint="@android:color/white"
                             android:layout_marginBottom="12dp"/>
 
                         <TextView
@@ -268,7 +268,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_settings"
-                            android:tint="@android:color/white"
+                            app:tint="@android:color/white"
                             android:layout_marginBottom="12dp"/>
 
                         <TextView
@@ -306,7 +306,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/ic_logout"
-                            android:tint="@android:color/white"
+                            app:tint="@android:color/white"
                             android:layout_marginBottom="12dp"/>
 
                         <TextView

@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quizapp">
 
-        <!-- MainActivity là activity khởi động -->
+        <!-- LoginActivity là activity khởi động -->
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,13 +25,13 @@
         </activity>
 
         <!-- Các activity khác -->
-        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.QuizActivity" />
         <activity android:name=".activities.ResultActivity" />
         <activity android:name=".activities.CreateQuestionActivity" />
         <activity android:name=".activities.AvatarActivity" />
-
+        <activity android:name=".activities.SelectAvatarActivity" />
     </application>
 
 </manifest>
