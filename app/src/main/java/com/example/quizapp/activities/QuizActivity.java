@@ -3,11 +3,9 @@ package com.example.quizapp.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.quizapp.R;
+import com.example.quizapp.data.MusicManager;
 import com.example.quizapp.data.SettingsManager;
 import com.example.quizapp.data.models.Question;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,9 +59,6 @@ public class QuizActivity extends AppCompatActivity {
     private SoundPool soundPool;
     private int sCorrect = -1, sWrong = -1;
 
-    // Music
-    private MediaPlayer bgMusic;
-
     // Firebase
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -84,9 +80,8 @@ public class QuizActivity extends AppCompatActivity {
         setupListeners();
         loadQuestionsFromFirestore();
 
-        if (settings.isMusicOn()) {
-            startMusic();
-        }
+        // Dừng nhạc app MainActivity nếu đang chạy
+        MusicManager.stopAppMusic();
     }
 
     private void initViews() {
@@ -123,18 +118,12 @@ public class QuizActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    // --- Chỉnh sửa logic thời gian mỗi câu hỏi ---
     private void initSettings() {
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = (user != null) ? user.getUid() : "guest";
-        settings = new SettingsManager(this, uid); // settings riêng theo user
+        settings = new SettingsManager(this, uid);
 
-        // Nếu bật tính giờ theo mỗi câu, lấy thời gian từ user nhập
-        if (settings.isPerQuestionTimer()) {
-            perQuestionMs = settings.getPerQuestionMillis(); // mili giây
-        } else {
-            perQuestionMs = 30000; // mặc định 30s
-        }
+        perQuestionMs = settings.isPerQuestionTimer() ? settings.getPerQuestionMillis() : 30000;
     }
 
     private void initSound() {
@@ -167,8 +156,7 @@ public class QuizActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for (QueryDocumentSnapshot doc : querySnapshot) {
-                        Question q = doc.toObject(Question.class);
-                        questions.add(q);
+                        questions.add(doc.toObject(Question.class));
                     }
 
                     if (questions.isEmpty()) {
@@ -287,12 +275,10 @@ public class QuizActivity extends AppCompatActivity {
             score += 10;
             playCorrect();
             showCorrectAnswer(selectedOption);
-            Toast.makeText(this, "Đúng rồi! +10 điểm", Toast.LENGTH_SHORT).show();
         } else {
             playWrong();
             showWrongAnswer(selectedOption);
             showCorrectAnswer(q.getCorrectIndex() != null ? q.getCorrectIndex() : (q.isCorrectTrue() ? 0 : 1));
-            Toast.makeText(this, "Sai mất rồi!", Toast.LENGTH_SHORT).show();
         }
 
         updateScore();
@@ -336,7 +322,12 @@ public class QuizActivity extends AppCompatActivity {
 
     private void finishQuiz() {
         if (perQuestionTimer != null) perQuestionTimer.cancel();
-        stopMusic();
+        stopQuizMusic();
+
+        // Resume app music nếu bật
+        if (settings.isMusicOn()) {
+            MusicManager.startAppMusic(this, true);
+        }
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -352,10 +343,8 @@ public class QuizActivity extends AppCompatActivity {
                 stats.put("quizCount", newQuizCount);
                 stats.put("avgScore", newAvgScore);
 
-                userRef.set(stats, SetOptions.merge())
-                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "User stats updated successfully"))
-                        .addOnFailureListener(e -> Log.e("Firestore", "Failed to update stats", e));
-            }).addOnFailureListener(e -> Log.e("Firestore", "Failed to fetch user stats", e));
+                userRef.set(stats, SetOptions.merge());
+            });
         }
 
         Intent intent = new Intent(this, ResultActivity.class);
@@ -375,22 +364,24 @@ public class QuizActivity extends AppCompatActivity {
             soundPool.play(sWrong, 1f, 1f, 0, 0, 1f);
     }
 
-    private void startMusic() {
-        if (bgMusic == null) {
-            bgMusic = MediaPlayer.create(this, R.raw.background_music);
-            bgMusic.setLooping(true);
-        }
-        if (!bgMusic.isPlaying()) {
-            bgMusic.start();
-        }
+    private void startQuizMusic() {
+        MusicManager.startQuizMusic(this, settings.isMusicOn());
     }
 
-    private void stopMusic() {
-        if (bgMusic != null && bgMusic.isPlaying()) {
-            bgMusic.stop();
-            bgMusic.release();
-            bgMusic = null;
-        }
+    private void stopQuizMusic() {
+        MusicManager.stopQuizMusic();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startQuizMusic();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopQuizMusic();
     }
 
     @Override
@@ -401,6 +392,6 @@ public class QuizActivity extends AppCompatActivity {
             soundPool.release();
             soundPool = null;
         }
-        stopMusic();
+        stopQuizMusic();
     }
 }

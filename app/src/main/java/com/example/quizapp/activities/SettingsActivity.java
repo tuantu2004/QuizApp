@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-
+import com.example.quizapp.data.MusicManager;
 import com.example.quizapp.R;
 import com.example.quizapp.data.SettingsManager;
 import com.google.android.material.textfield.TextInputEditText;
@@ -58,11 +58,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        swMusic.setOnCheckedChangeListener((buttonView, isChecked) -> settings.setMusicOn(isChecked));
+        swMusic.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            settings.setMusicOn(isChecked);
+            if (isChecked) {
+                MusicManager.startAppMusic(this, true);
+            } else {
+                MusicManager.stopAppMusic();
+            }
+        });
+
         swSfx.setOnCheckedChangeListener((buttonView, isChecked) -> settings.setSfxOn(isChecked));
         swPerQ.setOnCheckedChangeListener((buttonView, isChecked) -> settings.setPerQuestionTimer(isChecked));
+
         btnSaveSettings.setOnClickListener(v -> saveSettings());
     }
+
 
     private void saveSettings() {
         try {
